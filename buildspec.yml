@@ -18,7 +18,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - echo "[${IMAGE_NAME_NGINX}]" > imagedefinitions.json
+      - IMAGE_DIFINITION_NGINX="{\"name\":\"${IMAGE_NAME_NGINX}\",\"imageUri\":\"nginx\"}"
+      - echo "[${IMAGE_DIFINITION_NGINX}]" > imagedefinitions.json
 
   post_build:
     commands:
