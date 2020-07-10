@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+  pre_build:
+    commands:
+      - echo Clean file..
+      - rm -rf .git .gitignore README.md
+
+      - IMAGE_NAME_NGINX=nginx
+      - REPOSITORY_URI_PHP_FPM=198868742460.dkr.ecr.ap-south-1.amazonaws.com/testing/${IMAGE_NAME_PHP_FPM}
+      - REPOSITORY_URI_NGINX=198868742460.dkr.ecr.ap-south-1.amazonaws.com/testing/${IMAGE_NAME_NGINX}
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - echo Writing image definitions file..
